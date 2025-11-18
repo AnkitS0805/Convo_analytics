@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "multi-agent-analytics"
+version = "0.1.0"
+description = "Multi-Agent Conversational Data Analytics System using LangGraph, Streamlit, and SQLite"
+authors = ["Ankit Singh <you@example.com>"]
+readme = "README.md"
+packages = [{ include = "app", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+streamlit = "^1.39.0"
+langgraph = "^0.2.34"
+langchain-core = "^0.3.14"
+SQLAlchemy = "^2.0.36"
+pandas = "^2.2.3"
+pydantic = "^2.9.2"
+python-dotenv = "^1.0.1"
+boto3 = "^1.35.30"
+altair = "^5.4.1"
+uvicorn = "^0.32.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+ruff = "^0.7.3"
+pytest-dotenv = "^0.5.2"
+
+[tool.ruff]
+line-length = 100
+select = ["E","F","I","UP","B","PL","RUF"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-q"
+pythonpath = ["src"]
+
+[build-system]
+requires = ["poetry-core>=1.9.0"]
+build-backend = "poetry.core.masonry.api"
