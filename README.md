@@ -147,55 +147,7 @@ The system follows a **layered multi-agent architecture** with clear separation 
 
 ---
 
-## 📁 Project Structure
 
-```
-multi_agent_analytics/
-│
-├── src/
-│   └── app/
-│       ├── agents/              # Multi-agent system components
-│       │   ├── router_agent.py           # Query routing with confidence scoring
-│       │   ├── sql_planner_agent.py      # Natural language → SQL conversion
-│       │   ├── synthesizer_agent.py      # Data → Insights transformation
-│       │   └── non_data_agent.py         # General Q&A handler
-│       │
-│       ├── graph/               # LangGraph orchestration
-│       │   ├── builder.py                # Graph construction and node logic
-│       │   └── state.py                  # State definitions (AgentStep, TurnTrace)
-│       │
-│       ├── db/                  # Database layer
-│       │   ├── engine.py                 # SQLAlchemy engine setup
-│       │   ├── schema_introspector.py    # Schema metadata extraction
-│       │   └── sql_runner.py             # SQL execution with validation
-│       │
-│       ├── llm/                 # LLM integration
-│       │   └── bedrock_client.py         # AWS Bedrock client with retry & repair
-│       │
-│       ├── ui/                  # Streamlit interface
-│       │   ├── streamlit_app.py          # Main application entry point
-│       │   └── agent_trace_ui.py         # Agent visualization components
-│       │
-│       ├── prompts/             # Jinja2 prompt templates (if any)
-│       │
-│       ├── etl/                 # Data pipeline (not used in runtime)
-│       │   └── load_csv_to_db.py         # CSV → SQLite loader
-│       │
-│       ├── constants.py         # Application constants
-│       └── logging_config.py    # Centralized logging setup
-│
-├── data/                        # Database and data files
-│   ├── adventureworks.db                 # SQLite database (generated)
-│   └── archive/                          # Source CSV files (optional)
-│
-├── tests/                       # Unit tests
-│   └── test_*.py                         # Test files mirroring src structure
-│
-├── .env.example                 # Environment variables template
-├── .gitignore                   # Git ignore rules
-├── pyproject.toml               # Poetry dependency management
-└── README.md                    # This file
-```
 
 ### Key Files Explained
 
