@@ -106,6 +106,83 @@ The **Multi-Agent Analytics Platform** is an enterprise-grade, intelligent data 
         └──────────────────────┘
 ```
 
+### 📊 Detailed Architecture Diagram
+
+```mermaid
+graph TB
+    subgraph "User Interface Layer"
+        UI[Streamlit UI<br/>streamlit_app.py]
+        TRACE[Agent Trace Panel<br/>agent_trace_ui.py]
+    end
+
+    subgraph "Orchestration Layer"
+        GRAPH[LangGraph State Machine<br/>builder.py]
+        STATE[Conversation State<br/>state.py]
+    end
+
+    subgraph "Agent Layer"
+        ROUTER[Router Agent<br/>Intent Classification]
+        PLANNER[SQL Planner Agent<br/>NL to SQL]
+        EXECUTOR[SQL Executor<br/>Query Execution]
+        SYNTH[Synthesizer Agent<br/>Insights Generation]
+        NONDATA[Non-Data QA Agent<br/>General Questions]
+    end
+
+    subgraph "LLM Layer"
+        BEDROCK[AWS Bedrock Client<br/>Nova Lite/Pro Models]
+    end
+
+    subgraph "Data Layer"
+        DB[(SQLite Database<br/>AdventureWorks)]
+        SCHEMA[Schema Introspector<br/>schema_introspector.py]
+    end
+
+    UI -->|User Query| GRAPH
+    GRAPH -->|Route Decision| ROUTER
+    
+    ROUTER -->|"data query"| PLANNER
+    ROUTER -->|"non-data query"| NONDATA
+    
+    PLANNER -->|SQL Query| EXECUTOR
+    EXECUTOR -->|Query Results| SYNTH
+    SYNTH -->|Insights + Charts| GRAPH
+    
+    NONDATA -->|Answer| GRAPH
+    
+    GRAPH -->|Final Response| UI
+    GRAPH -->|Execution Trace| TRACE
+    TRACE -->|Display| UI
+    
+    ROUTER -.->|LLM Call| BEDROCK
+    PLANNER -.->|LLM Call| BEDROCK
+    SYNTH -.->|LLM Call| BEDROCK
+    NONDATA -.->|LLM Call| BEDROCK
+    
+    EXECUTOR -->|Execute SQL| DB
+    SCHEMA -->|Read Schema| DB
+    PLANNER -.->|Schema Context| SCHEMA
+    
+    STATE -.->|Track Steps| GRAPH
+
+    style UI fill:#e1f5ff
+    style GRAPH fill:#fff4e1
+    style ROUTER fill:#f0e1ff
+    style PLANNER fill:#f0e1ff
+    style EXECUTOR fill:#f0e1ff
+    style SYNTH fill:#f0e1ff
+    style NONDATA fill:#f0e1ff
+    style BEDROCK fill:#ffe1e1
+    style DB fill:#e1ffe1
+```
+
+**Flow Explanation:**
+1. **User Input** → Streamlit UI captures natural language query
+2. **Routing** → Router Agent classifies intent (data vs. non-data)
+3. **Data Path**: SQL Planner → Executor → Synthesizer → Results
+4. **Non-Data Path**: Non-Data QA Agent → Direct answer
+5. **Visualization** → Agent Trace Panel shows execution steps
+6. **LLM Integration** → All agents use AWS Bedrock for intelligence
+
 ---
 
 ## 📁 Project Structure
