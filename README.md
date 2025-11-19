@@ -106,6 +106,45 @@ The **Multi-Agent Analytics Platform** is an enterprise-grade, intelligent data 
         └──────────────────────┘
 ```
 
+### 📊 System Architecture Diagram
+
+![Multi-Agent Analytics Architecture](docs/architecture.png)
+
+**Architecture Overview:**
+
+The system follows a **layered multi-agent architecture** with clear separation of concerns:
+
+1. **User Interface Layer** (Top Right - Blue)
+   - Streamlit web application for user interaction
+   - Real-time agent trace visualization
+   - Conversation history management
+
+2. **Orchestration Layer** (Center - Yellow)
+   - LangGraph state machine coordinates all agents
+   - Manages conversation state and execution flow
+   - Routes queries based on intent classification
+
+3. **Agent Layer** (Left - Purple)
+   - **Router Agent**: Classifies user intent (data vs. non-data queries)
+   - **SQL Planner Agent**: Converts natural language to SQL
+   - **SQL Executor**: Executes queries with error handling
+   - **Synthesizer Agent**: Transforms results into business insights
+   - **Non-Data QA Agent**: Handles greetings and general questions
+
+4. **LLM Layer** (Bottom - Red)
+   - AWS Bedrock integration with Nova Lite/Pro models
+   - JSON response parsing and repair
+   - Retry logic for transient errors
+
+5. **Data Layer** (Top Left - Green)
+   - SQLite database with AdventureWorks sample data
+   - Schema introspection for query validation
+   - SQL execution with timeout and safety checks
+
+**Execution Flow:**
+- **Data Queries**: User → Router → SQL Planner → Executor → Synthesizer → Results
+- **Non-Data Queries**: User → Router → Non-Data QA → Direct Answer
+
 ---
 
 ## 📁 Project Structure
@@ -170,6 +209,12 @@ multi_agent_analytics/
 | `bedrock_client.py` | AWS Bedrock integration with JSON repair and retry logic |
 | `state.py` | Data structures for agent steps and execution traces |
 | `agent_trace_ui.py` | Reusable UI components for agent visualization |
+
+---
+
+
+
+
 
 ---
 
