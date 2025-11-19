@@ -68,43 +68,7 @@ The **Multi-Agent Analytics Platform** is an enterprise-grade, intelligent data 
 
 ---
 
-## 🏗️ Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Streamlit UI Layer                       │
-│  - Conversation History  - Agent Traces  - Visualizations   │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│              LangGraph Orchestrator (State Machine)         │
-│  - State Management  - Agent Coordination  - Flow Control   │
-└─┬──────┬─────────┬──────────┬──────────┬────────────────────┘
-  │      │         │          │          │
-  ▼      ▼         ▼          ▼          ▼
-┌────┐┌─────┐ ┌────────┐ ┌────────┐ ┌──────────┐
-│    ││     │ │  SQL   │ │  SQL   │ │Synthe-   │
-│Rtr ││Non  │ │Planner │ │Executor│ │sizer     │
-│    ││Data │ │        │ │        │ │          │
-└────┘└─────┘ └────────┘ └────────┘ └──────────┘
-  │      │         │          │          │
-  └──────┴─────────┴──────────┴──────────┘
-                   │
-                   ▼
-        ┌──────────────────────┐
-        │   AWS Bedrock LLMs   │
-        │  - Nova Lite v1.0    │
-        │  - Nova Pro v1.0     │
-        │  - Titan Embed v2    │
-        └──────────────────────┘
-                   │
-                   ▼
-        ┌──────────────────────┐
-        │  SQLite Database     │
-        │  (AdventureWorks)    │
-        └──────────────────────┘
-```
 
 ### 📊 System Architecture Diagram
 
@@ -208,15 +172,6 @@ pip install -e .
 
 This will install all dependencies defined in `pyproject.toml`.
 
-### Step 4: Configure Environment Variables
-
-```bash
-# Copy the example environment file
-cp .env.example .env
-
-# Edit .env with your credentials
-nano .env  # or use your preferred editor
-```
 
 **Required Environment Variables:**
 
@@ -239,18 +194,7 @@ MAX_PREVIEW_ROWS=100
 SQL_TIMEOUT_SECONDS=30
 ```
 
-### Step 5: Verify Installation
 
-```bash
-# Check Python version
-python --version  # Should be 3.13+
-
-# Verify dependencies
-pip list | grep streamlit
-pip list | grep langgraph
-```
-
----
 
 ## 🎮 Usage
 
@@ -270,11 +214,7 @@ streamlit run src/app/ui/streamlit_app.py
 - **Local URL**: http://localhost:8501
 - **Network URL**: http://YOUR_IP:8501 (for remote access)
 
-### Stopping the Application
 
-```bash
-# Press Ctrl+C in the terminal
-```
 
 ---
 
@@ -350,7 +290,6 @@ ORDER BY CustomerCount DESC
    2. Maintain strong presence in North America
    3. Investigate European conversion rates
 
-📊 Chart: Bar chart showing regional distribution
 ⏱️ Duration: 4.2s
 ```
 
